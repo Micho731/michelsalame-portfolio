@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michel Salame — Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --navy-mid: #152E52;
+    --blue: #1A56DB;
+    --blue-light: #3B82F6;
+    --accent: #00C9A7;
+    --accent2: #FFB347;
+    --text: #0B1F3A;
+    --text-muted: #4B5980;
+    --text-light: #8394B4;
+    --bg: #F5F7FC;
+    --bg-card: #FFFFFF;
+    --border: #D8E0F0;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Outfit', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 60px;
+    box-shadow: 0 2px 20px rgba(11,31,58,0.3);
+  }
+  .nav-brand { font-family: var(--serif); color: #fff; font-size: 1.2rem; letter-spacing: 0.02em; }
+  .nav-brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 0; }
+  .nav-links button {
+    background: none; border: none; color: rgba(255,255,255,0.65);
+    font-family: var(--sans); font-size: 0.82rem; font-weight: 500;
+    padding: 0 1.1rem; height: 60px; cursor: pointer;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s, border-bottom 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-links button:hover, .nav-links button.active {
+    color: #fff; border-bottom: 2px solid var(--accent);
+  }
+
+  /* PAGES */
+  .page { display: none; min-height: 100vh; padding-top: 60px; }
+  .page.active { display: block; }
+
+  /* ===== PAGE 1: HOME ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 55%, #1A3A6B 100%);
+    padding: 5rem 2.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    border: 60px solid rgba(0,201,167,0.08);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -60px; left: 30%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 40px solid rgba(26,86,219,0.12);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(0,201,167,0.15); border: 1px solid rgba(0,201,167,0.35);
+    color: var(--accent); font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.3rem 0.9rem; border-radius: 2rem; margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: var(--serif); color: #fff;
+    font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    color: rgba(255,255,255,0.72); font-size: 1.05rem; font-weight: 300;
+    max-width: 620px; margin-bottom: 2rem; line-height: 1.75;
+  }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem; }
+  .badge {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.82); font-size: 0.8rem; font-weight: 400;
+    padding: 0.3rem 0.85rem; border-radius: 2rem; font-family: var(--mono);
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: var(--navy);
+    border: none; padding: 0.75rem 1.8rem;
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 600;
+    border-radius: 0.4rem; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline {
+    background: transparent; color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    padding: 0.75rem 1.8rem;
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 500;
+    border-radius: 0.4rem; cursor: pointer; transition: border-color 0.2s;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.7); }
+
+  .section { max-width: 880px; margin: 0 auto; padding: 3.5rem 2rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem;
+  }
+  .section h2 {
+    font-family: var(--serif); font-size: 2rem; color: var(--navy); margin-bottom: 1.5rem;
+  }
+  .section p { color: var(--text-muted); font-size: 0.97rem; line-height: 1.8; margin-bottom: 1rem; }
+
+  .goal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
+  .goal-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 0.75rem; padding: 1.4rem 1.2rem;
+    border-top: 3px solid var(--accent);
+  }
+  .goal-card .icon { font-size: 1.6rem; margin-bottom: 0.7rem; }
+  .goal-card h4 { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+  .goal-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+
+  .company-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 0.75rem; padding: 2rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  @media(max-width:640px){ .company-card { grid-template-columns: 1fr; } }
+  .company-card h3 { font-family: var(--serif); font-size: 1.5rem; color: var(--navy); margin-bottom: 0.5rem; }
+  .company-card .co-name {
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--blue); font-weight: 600; margin-bottom: 0.3rem;
+  }
+  .obj-box {
+    background: var(--navy); border-radius: 0.6rem; padding: 1.5rem;
+    color: rgba(255,255,255,0.88); font-size: 0.92rem; line-height: 1.75;
+  }
+  .obj-box .obj-title { color: var(--accent); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.7rem; }
+
+  /* ===== PAGE 2: CV ===== */
+  .cv-wrap { max-width: 880px; margin: 0 auto; padding: 3rem 2rem; }
+  .cv-header {
+    background: var(--navy); border-radius: 1rem; padding: 2.5rem;
+    margin-bottom: 2rem; color: #fff;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .cv-header h1 { font-family: var(--serif); font-size: 2.2rem; margin-bottom: 0.3rem; }
+  .cv-header .cv-title { color: var(--accent); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .cv-header .cv-summary { color: rgba(255,255,255,0.72); font-size: 0.9rem; max-width: 480px; line-height: 1.7; }
+  .cv-contacts { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.82rem; color: rgba(255,255,255,0.65); text-align: right; }
+  .cv-contacts a { color: var(--accent); text-decoration: none; }
+
+  .cv-section { margin-bottom: 2rem; }
+  .cv-section-title {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--blue);
+    border-bottom: 2px solid var(--border); padding-bottom: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .exp-item { margin-bottom: 1.4rem; }
+  .exp-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.3rem; }
+  .exp-role { font-weight: 600; font-size: 0.97rem; color: var(--navy); }
+  .exp-org { font-size: 0.85rem; color: var(--blue); }
+  .exp-date { font-size: 0.8rem; color: var(--text-light); font-family: var(--mono); }
+  .exp-bullets { list-style: none; padding-left: 0; }
+  .exp-bullets li {
+    font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;
+    padding: 0.2rem 0 0.2rem 1.2rem; position: relative;
+  }
+  .exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; top: 0.35rem; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+  .skill-group { background: var(--bg-card); border: 1px solid var(--border); border-radius: 0.6rem; padding: 1rem; }
+  .skill-group h4 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); margin-bottom: 0.6rem; }
+  .skill-tag {
+    display: inline-block; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 0.3rem;
+    font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted);
+    padding: 0.2rem 0.5rem; margin: 0.15rem;
+  }
+
+  .cert-item { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 0.6rem; margin-bottom: 0.7rem; }
+  .cert-icon { background: rgba(26,86,219,0.08); border-radius: 0.4rem; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .cert-info h4 { font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+  .cert-info p { font-size: 0.8rem; color: var(--text-light); font-family: var(--mono); }
+
+  .ref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .ref-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 0.7rem; padding: 1.3rem; }
+  .ref-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; color: var(--accent); font-weight: 700; font-size: 1rem; margin-bottom: 0.8rem; }
+  .ref-card h4 { font-weight: 600; font-size: 0.95rem; color: var(--navy); }
+  .ref-card .ref-title { font-size: 0.82rem; color: var(--blue); margin-bottom: 0.3rem; }
+  .ref-card .ref-note { font-size: 0.8rem; color: var(--text-light); font-style: italic; }
+
+  /* ===== PAGE 3: MOCK INTERVIEW ===== */
+  .interview-wrap { max-width: 880px; margin: 0 auto; padding: 3rem 2rem; }
+  .int-header { margin-bottom: 2.5rem; }
+  .int-header h2 { font-family: var(--serif); font-size: 2rem; color: var(--navy); margin-bottom: 0.5rem; }
+  .int-header p { color: var(--text-muted); font-size: 0.95rem; }
+
+  .q-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 0.8rem; margin-bottom: 1.4rem; overflow: hidden; }
+  .q-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.3rem; cursor: pointer; gap: 1rem;
+  }
+  .q-head:hover { background: var(--bg); }
+  .q-type-tag {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.2rem 0.6rem; border-radius: 2rem;
+  }
+  .tag-general { background: rgba(0,201,167,0.12); color: #007A65; }
+  .tag-behavioral { background: rgba(26,86,219,0.1); color: #0F3F9C; }
+  .tag-situational { background: rgba(255,179,71,0.15); color: #8B5B00; }
+  .tag-technical { background: rgba(220,38,38,0.1); color: #9B1C1C; }
+  .q-title { font-weight: 600; font-size: 0.93rem; color: var(--navy); flex: 1; }
+  .q-toggle { font-size: 1rem; color: var(--text-light); transition: transform 0.25s; }
+  .q-body { display: none; padding: 0 1.3rem 1.3rem; }
+  .q-body.open { display: block; }
+  .q-question { font-size: 0.88rem; font-style: italic; color: var(--text-light); margin-bottom: 1rem; padding: 0.7rem 1rem; background: var(--bg); border-radius: 0.4rem; border-left: 3px solid var(--accent); }
+  .star-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-bottom: 1rem; }
+  .star-item { border-left: 3px solid var(--blue); padding-left: 0.8rem; }
+  .star-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 0.3rem; }
+  .star-text { font-size: 0.87rem; color: var(--text-muted); line-height: 1.65; }
+  .answer-prose { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; }
+
+  /* ===== PAGE 4: REFLECTION ===== */
+  .reflection-wrap { max-width: 760px; margin: 0 auto; padding: 3.5rem 2rem; }
+  .reflection-wrap h2 { font-family: var(--serif); font-size: 2rem; color: var(--navy); margin-bottom: 0.4rem; }
+  .reflection-wrap .word-count { font-family: var(--mono); font-size: 0.78rem; color: var(--text-light); margin-bottom: 2rem; }
+  .reflection-body p { font-size: 0.97rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 1.3rem; }
+  .reflection-body p:first-of-type::first-letter { font-family: var(--serif); font-size: 3rem; float: left; line-height: 0.85; margin: 0.1rem 0.5rem 0 0; color: var(--navy); }
+  .pull-quote { border-left: 4px solid var(--accent); padding: 0.8rem 1.3rem; margin: 1.8rem 0; background: rgba(0,201,167,0.06); border-radius: 0 0.5rem 0.5rem 0; }
+  .pull-quote p { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--navy); margin: 0; }
+
+  /* ===== PAGE 5: AI TOOLS ===== */
+  .ai-wrap { max-width: 880px; margin: 0 auto; padding: 3rem 2rem; }
+  .ai-wrap h2 { font-family: var(--serif); font-size: 2rem; color: var(--navy); margin-bottom: 0.4rem; }
+  .ai-wrap .ai-intro { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2.5rem; }
+  .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+  .tool-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 0.8rem; padding: 1.5rem; position: relative; overflow: hidden; }
+  .tool-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .tool-card.claude::before { background: linear-gradient(90deg, #1A56DB, #00C9A7); }
+  .tool-card.grammarly::before { background: linear-gradient(90deg, #00C9A7, #00A88A); }
+  .tool-card.chatgpt::before { background: linear-gradient(90deg, #10A37F, #2ECC71); }
+  .tool-card.interview::before { background: linear-gradient(90deg, #FFB347, #FF8C00); }
+  .tool-card.linkedin::before { background: linear-gradient(90deg, #0A66C2, #1E90FF); }
+  .tool-logo { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .tool-name { font-weight: 700; font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem; }
+  .tool-purpose-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--blue); margin-bottom: 0.7rem; }
+  .tool-desc { font-size: 0.87rem; color: var(--text-muted); line-height: 1.7; }
+  .tool-uses { list-style: none; margin-top: 0.8rem; }
+  .tool-uses li { font-size: 0.82rem; color: var(--text-muted); padding: 0.25rem 0 0.25rem 1.1rem; position: relative; line-height: 1.5; }
+  .tool-uses li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
+
+  .ai-impact { background: var(--navy); border-radius: 0.8rem; padding: 2rem; margin-top: 2rem; }
+  .ai-impact h3 { font-family: var(--serif); color: #fff; font-size: 1.4rem; margin-bottom: 1rem; }
+  .impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+  .impact-stat { text-align: center; }
+  .impact-stat .num { font-family: var(--serif); font-size: 2rem; color: var(--accent); display: block; }
+  .impact-stat .lbl { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+
+  /* DIVIDERS */
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Michel <span>Salame</span></div>
+  <div class="nav-links">
+    <button class="active" onclick="showPage('home',this)">Home</button>
+    <button onclick="showPage('cv',this)">CV</button>
+    <button onclick="showPage('interview',this)">Interview</button>
+    <button onclick="showPage('reflection',this)">Reflection</button>
+    <button onclick="showPage('ai',this)">AI Tools</button>
+  </div>
+</nav>
+
+<!-- ===================== PAGE 1: HOME ===================== -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">🎓 AUST · Class of 2026 · Honors</div>
+      <h1>Michel Salame<br><em>Engineer. Builder. Innovator.</em></h1>
+      <p class="hero-sub">
+        Senior Computer and Communications Engineering student at the American University of Science and Technology, specializing in Embedded Systems and the Internet of Things — designing hardware-software solutions that bridge the physical and digital world.
+      </p>
+      <div class="hero-badges">
+        <span class="badge">Embedded Systems</span>
+        <span class="badge">IoT</span>
+        <span class="badge">Python · MATLAB</span>
+        <span class="badge">PID Control</span>
+        <span class="badge">PCB Design</span>
+        <span class="badge">Arduino · Raspberry Pi</span>
+        <span class="badge">BACnet / Modbus</span>
+      </div>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="showPage('cv', document.querySelectorAll('.nav-links button')[1])">View My CV</button>
+        <button class="btn-outline" onclick="window.open('https://www.linkedin.com/in/michel-salame/','_blank')">LinkedIn ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">About This Portfolio</div>
+    <h2>Project Goal & Professional Mission</h2>
+    <p>
+      This portfolio was developed as part of the <strong>AI-Powered Career Simulation</strong> project at AUST, designed to translate classroom learning about CV writing and mock interviews into a concrete, career-ready artifact. Every page demonstrates both technical depth and professional communication — with AI tools serving as active collaborators throughout the process.
+    </p>
+    <p>
+      The goal is simple: prove that a 20-year-old engineering senior with hands-on experience in sensor systems, Python automation, and embedded hardware is ready to contribute meaningfully to the engineering teams shaping tomorrow's connected world.
+    </p>
+    <div class="goal-grid">
+      <div class="goal-card">
+        <div class="icon">🧠</div>
+        <h4>AI-Augmented Development</h4>
+        <p>Used Claude, Grammarly, and ChatGPT-based interview simulators to refine every deliverable.</p>
+      </div>
+      <div class="goal-card">
+        <div class="icon">📄</div>
+        <h4>Polished CV</h4>
+        <p>Tailored to a real engineering role with quantifiable achievements and action-verb-driven language.</p>
+      </div>
+      <div class="goal-card">
+        <div class="icon">🎤</div>
+        <h4>Interview Readiness</h4>
+        <p>Prepared 6 structured answers using the STAR method and practiced with an AI simulator.</p>
+      </div>
+      <div class="goal-card">
+        <div class="icon">🚀</div>
+        <h4>Job Fair Preparation</h4>
+        <p>Built for the AUST Job Fair and real engineering applications in embedded systems and IoT.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <div class="section">
+    <div class="section-label">Target Company</div>
+    <h2>Company Focus: Emerson Electric</h2>
+    <div class="company-card">
+      <div>
+        <div class="co-name">Emerson Electric Co.</div>
+        <h3>Why Emerson?</h3>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.75;">
+          Emerson is a global leader in automation and IoT-driven process control, operating across industries from energy management to smart manufacturing. Their Automation Solutions division is at the forefront of industrial IoT, with platforms like Plantweb leveraging sensor intelligence, real-time analytics, and edge computing — precisely the domain where my BACnet/Modbus experience at MelRok, PID control systems work, and Python data pipeline skills are directly applicable.
+        </p>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.75;margin-top:0.8rem;">
+          Emerson actively recruits engineers who can bridge the gap between hardware and software — a skill set I have deliberately cultivated through projects like the Ball &amp; Plate Control System and AquaSmart. Their graduate engineering programs provide structured mentorship while allowing immediate contribution to live industrial deployments.
+        </p>
+      </div>
+      <div>
+        <div class="obj-box">
+          <div class="obj-title">🎯 Career Objective</div>
+          To secure a junior Embedded Systems or IoT Engineer role at Emerson Electric, where I can apply my expertise in sensor integration, Python automation, and industrial communication protocols (BACnet/Modbus) to develop intelligent, connected systems that enhance process efficiency. I aim to contribute to Emerson's Plantweb IoT ecosystem while deepening my skills in industrial control and real-time data analytics — and ultimately grow into a systems engineer capable of leading cross-functional hardware–software projects.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 2: CV ===================== -->
+<div id="page-cv" class="page">
+  <div class="cv-wrap">
+    <div class="cv-header">
+      <div>
+        <div class="cv-title">Computer &amp; Communications Engineer</div>
+        <h1>Michel Salame</h1>
+        <p class="cv-summary">
+          Aspiring engineer with hands-on experience in embedded systems, IoT data pipelines, IT support, and software development. Proven ability to design and implement real-world hardware–software solutions, with a strong foundation in electronics, control systems, and programming.
+        </p>
+      </div>
+      <div class="cv-contacts">
+        <span>michelsalame406@gmail.com</span>
+        <span>+961 76 509 236</span>
+        <a href="https://www.linkedin.com/in/michel-salame/" target="_blank">linkedin.com/in/michel-salame</a>
+        <span>Zahle, Lebanon</span>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="cv-section">
+      <div class="cv-section-title">Education</div>
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Bachelor of Science — Computer and Communications Engineering (Honors)</div>
+            <div class="exp-org">American University of Science and Technology (AUST), Zahle</div>
+          </div>
+          <div class="exp-date">Expected June 2026</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Graduated with Honors distinction; coursework in Signals &amp; Systems, Digital Communications, Embedded Systems, and Control Theory.</li>
+          <li>Completed capstone projects integrating computer vision, PID control, and real-time sensor fusion.</li>
+          <li>Active member of the engineering lab team, supporting student instruction in PCB prototyping and digital systems.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="cv-section">
+      <div class="cv-section-title">Work Experience</div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Software &amp; Data Engineering Intern</div>
+            <div class="exp-org">MelRok LLC — California, USA (Remote)</div>
+          </div>
+          <div class="exp-date">June – August 2025</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Engineered Python pipelines for energy meter time-series analysis, automating load calculations and reducing manual processing time by an estimated 60%.</li>
+          <li>Performed sensor validation and data synthesis across IoT gateways, verifying BACnet/Modbus device outputs against expected baselines to ensure measurement integrity.</li>
+          <li>Built interactive Plotly dashboards that condensed multi-source sensor data into actionable performance insights for engineering review.</li>
+          <li>Configured and tested Modbus TCP/IP and BACnet/IP integrations on edge gateways, documenting device discovery workflows for future onboarding.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">IT Support &amp; Engineering Labs Assistant</div>
+            <div class="exp-org">American University of Science and Technology (AUST)</div>
+          </div>
+          <div class="exp-date">Feb 2023 – Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Delivered first-line technical support for hardware, software, and network issues across campus labs, maintaining &gt;98% lab availability during peak academic periods.</li>
+          <li>Guided 100+ students in electrical and electronics laboratory sessions covering oscilloscope operation, PCB prototyping, and digital logic design.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="cv-section">
+      <div class="cv-section-title">Selected Projects</div>
+      <div class="exp-item">
+        <div class="exp-header">
+          <div><div class="exp-role">PID Ball &amp; Plate Control System</div></div>
+          <div class="exp-date">December 2025</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Built a closed-loop balancing system using a Raspberry Pi 4, 3-servo actuator, and OpenCV at 100 FPS for real-time ball tracking.</li>
+          <li>Developed a custom-tuned PID algorithm and Tkinter GUI for live parameter adjustment; achieved stable continuous balancing.</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-header">
+          <div><div class="exp-role">AquaSmart — Automated Water Management System</div></div>
+          <div class="exp-date">June 2024</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Designed an LM741-based analog control unit with moisture-sensitive irrigation trigger, integrating level sensors and relay logic for autonomous pump management.</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-header">
+          <div><div class="exp-role">SunGuide — Dual-Axis Solar Tracking System</div></div>
+          <div class="exp-date">May 2024</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Programmed an Arduino-based dual-axis tracker using LDR sensors and servo motors, demonstrably improving energy capture over fixed panels.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="cv-section">
+      <div class="cv-section-title">Skills</div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h4>Programming</h4>
+          <span class="skill-tag">Python</span><span class="skill-tag">C++</span><span class="skill-tag">Java</span>
+          <span class="skill-tag">MATLAB</span><span class="skill-tag">Arduino IDE</span>
+          <span class="skill-tag">Assembly</span><span class="skill-tag">SQL</span>
+        </div>
+        <div class="skill-group">
+          <h4>Embedded / IoT</h4>
+          <span class="skill-tag">ESP32</span><span class="skill-tag">Raspberry Pi</span>
+          <span class="skill-tag">Arduino</span><span class="skill-tag">BACnet</span>
+          <span class="skill-tag">Modbus</span><span class="skill-tag">PID Control</span>
+          <span class="skill-tag">Ladder Logic</span>
+        </div>
+        <div class="skill-group">
+          <h4>CAD / Simulation</h4>
+          <span class="skill-tag">Proteus</span><span class="skill-tag">NI Multisim</span>
+          <span class="skill-tag">LTSpice</span><span class="skill-tag">Simulink</span>
+          <span class="skill-tag">TinkerCAD</span>
+        </div>
+        <div class="skill-group">
+          <h4>Soft Skills</h4>
+          <span class="skill-tag">Technical Writing</span>
+          <span class="skill-tag">Lab Instruction</span>
+          <span class="skill-tag">Problem-Solving</span>
+          <span class="skill-tag">Cross-functional Collaboration</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATIONS -->
+    <div class="cv-section">
+      <div class="cv-section-title">Certifications</div>
+      <div class="cert-item">
+        <div class="cert-icon">🌐</div>
+        <div class="cert-info">
+          <h4>CCNA: Switching, Routing, and Wireless Essentials</h4>
+          <p>Cisco Networking Academy · Completed 2024</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFERENCES -->
+    <div class="cv-section">
+      <div class="cv-section-title">References</div>
+      <div class="ref-grid">
+        <div class="ref-card">
+          <div class="ref-avatar">DR</div>
+          <h4>Dr. Rahal</h4>
+          <div class="ref-title">Faculty — Engineering Department, AUST</div>
+          <p class="ref-note">Available upon request. Supervised coursework in control systems and embedded design; can speak to technical aptitude and independent problem-solving.</p>
+        </div>
+        <div class="ref-card">
+          <div class="ref-avatar">AH</div>
+          <h4>Dr. Abou Haidar</h4>
+          <div class="ref-title">Faculty — Computer Engineering, AUST</div>
+          <p class="ref-note">Available upon request. Supervised lab instruction responsibilities; can attest to communication skills, reliability, and student mentorship ability.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 3: MOCK INTERVIEW ===================== -->
+<div id="page-interview" class="page">
+  <div class="interview-wrap">
+    <div class="int-header">
+      <div class="section-label">Part 2 — Interview Preparation</div>
+      <h2>Mock Interview Responses</h2>
+      <p>Prepared for a Junior Embedded Systems / IoT Engineer role at Emerson Electric. Click any question to expand the full response.</p>
+    </div>
+
+    <!-- Q1: General -->
+    <div class="q-block">
+      <div class="q-head" onclick="toggleQ(this)">
+        <span class="q-type-tag tag-general">General</span>
+        <span class="q-title">Tell me about yourself</span>
+        <span class="q-toggle">▼</span>
+      </div>
+      <div class="q-body">
+        <div class="q-question">"Tell me about yourself."</div>
+        <p class="answer-prose">
+          My name is Michel Salame, and I'm a final-year Computer and Communications Engineering student at AUST, graduating with honors in June 2026. My focus is on the intersection of embedded hardware and intelligent software — specifically, building systems where physical sensors communicate meaningfully with data pipelines.
+        </p>
+        <p class="answer-prose" style="margin-top:0.8rem;">
+          This past summer, I interned at MelRok LLC in California, where I developed Python pipelines for energy meter time-series analysis and validated sensor data across BACnet and Modbus IoT gateways. Before that, I led several hardware projects at AUST — including a Raspberry Pi-based ball balancing system with real-time computer vision, and a dual-axis solar tracker using Arduino. I'm drawn to Emerson because your Plantweb platform directly mirrors the kind of work I've been doing: connecting physical measurement to actionable insight. I'm ready to contribute from day one and grow into a systems engineer who can own full-stack embedded deployments.
+        </p>
+      </div>
+    </div>
+
+    <!-- Q2: Behavioral 1 -->
+    <div class="q-block">
+      <div class="q-head" onclick="toggleQ(this)">
+        <span class="q-type-tag tag-behavioral">Behavioral</span>
+        <span class="q-title">Describe a time you solved a complex technical problem under pressure</span>
+        <span class="q-toggle">▼</span>
+      </div>
+      <div class="q-body">
+        <div class="q-question">"Describe a time you solved a complex technical problem under pressure."</div>
+        <div class="star-grid">
+          <div class="star-item">
+            <div class="star-label">Situation</div>
+            <div class="star-text">During my MelRok internship, our IoT gateway began returning inconsistent energy readings two weeks before a client presentation. The discrepancies were silent — no error flags — making them especially dangerous to miss.</div>
+          </div>
+          <div class="star-item">
+            <div class="star-label">Task</div>
+            <div class="star-text">I was tasked with diagnosing the data integrity issue, determining its root cause, and implementing a validation layer — all within three business days.</div>
+          </div>
+          <div class="star-item">
+            <div class="star-label">Action</div>
+            <div class="star-text">I wrote a Python script to cross-reference raw BACnet register reads against expected baselines, isolating a polling rate mismatch on two meters. I then adjusted the gateway's scan interval configuration and added an automated outlier-flagging function to the pipeline.</div>
+          </div>
+          <div class="star-item">
+            <div class="star-label">Result</div>
+            <div class="star-text">The validation layer caught and corrected the anomalies before the client demo. Post-fix, measurement variance dropped below 0.5%, and my outlier-detection module was kept as a permanent part of the pipeline.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Behavioral 2 -->
+    <div class="q-block">
+      <div class="q-head" onclick="toggleQ(this)">
+        <span class="q-type-tag tag-behavioral">Behavioral</span>
+        <span class="q-title">Tell me about a time you led a project with limited resources</span>
+        <span class="q-toggle">▼</span>
+      </div>
+      <div class="q-body">
+        <div class="q-question">"Tell me about a time you successfully led a project with limited resources."</div>
+        <div class="star-grid">
+          <div class="star-item">
+            <div class="star-label">Situation</div>
+            <div class="star-text">For my PID Ball &amp; Plate Control System capstone, my team had a fixed budget of department-allocated components — no external purchases — and a hard six-week deadline.</div>
+          </div>
+          <div class="star-item">
+            <div class="star-label">Task</div>
+            <div class="star-text">I led the system architecture decisions: selecting the Raspberry Pi 4 over a more expensive industrial controller, and using OpenCV rather than a dedicated vision sensor to stay within budget.</div>
+          </div>
+          <div class="star-item">
+            <div class="star-label">Action</div>
+            <div class="star-text">I divided the build into parallel tracks — one teammate handled mechanical servo kinematics while I developed the PID algorithm and vision loop. I held daily 15-minute syncs to resolve integration conflicts early, and documented every parameter change in a shared log.</div>
+          </div>
+          <div class="star-item">
+            <div class="star-label">Result</div>
+            <div class="star-text">We delivered a fully functional closed-loop system achieving 100 FPS ball tracking and stable real-time balancing — presented to faculty who described it as one of the most technically complete projects of the cohort.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4: Situational 1 -->
+    <div class="q-block">
+      <div class="q-head" onclick="toggleQ(this)">
+        <span class="q-type-tag tag-situational">Situational</span>
+        <span class="q-title">How would you handle a disagreement with a senior engineer about design approach?</span>
+        <span class="q-toggle">▼</span>
+      </div>
+      <div class="q-body">
+        <div class="q-question">"If you disagreed with a senior engineer on a design choice, what would you do?"</div>
+        <p class="answer-prose">
+          I would start by making sure I fully understand their reasoning — not to concede, but to ensure I'm not missing context that justifies the choice. Engineers often carry institutional knowledge that isn't visible in a spec document. I'd ask clarifying questions and listen carefully before forming a response.
+        </p>
+        <p class="answer-prose" style="margin-top:0.7rem;">
+          If I still believed my approach had merit after that, I'd document a brief technical comparison: concrete trade-offs, test data if available, and the specific scenario where my approach would outperform. I'd present this in a one-on-one conversation, framing it as "here's what I observed" rather than "you're wrong." Engineers respond well to data. If after that discussion the senior engineer still chose their approach, I would commit to it fully and help execute it well — disagreement during design is healthy, but fractured execution is damaging.
+        </p>
+        <p class="answer-prose" style="margin-top:0.7rem;">
+          During my MelRok internship, I suggested a different polling strategy than what was initially configured. I ran a side-by-side comparison showing a 12% reduction in gateway load. The lead engineer adopted it after reviewing the data. That experience taught me the value of speaking with evidence, not just opinion.
+        </p>
+      </div>
+    </div>
+
+    <!-- Q5: Situational 2 -->
+    <div class="q-block">
+      <div class="q-head" onclick="toggleQ(this)">
+        <span class="q-type-tag tag-situational">Situational</span>
+        <span class="q-title">A critical sensor in your deployed system starts returning erratic data mid-operation</span>
+        <span class="q-toggle">▼</span>
+      </div>
+      <div class="q-body">
+        <div class="q-question">"You're on a live deployment. A sensor suddenly starts returning erratic values. What do you do?"</div>
+        <p class="answer-prose">
+          First, I would determine whether the erratic data is a hardware failure, a communication fault, or a software parsing issue — they require completely different fixes. I'd check the physical connection and power supply, then verify the protocol register read against the device's documentation to rule out a configuration drift.
+        </p>
+        <p class="answer-prose" style="margin-top:0.7rem;">
+          If the cause isn't immediately clear, I'd isolate the sensor from the control loop to prevent downstream damage — substituting a safe default value or entering a hold-last-valid state — and escalate immediately to the lead engineer while documenting my observations. I would not attempt a live fix without informing the team, especially in an industrial context where sensor data may be driving actuators.
+        </p>
+        <p class="answer-prose" style="margin-top:0.7rem;">
+          This mirrors what I did during my internship when a Modbus meter began returning zero-value reads intermittently. I inserted a NaN-detection step in the pipeline, replaced outputs with the last valid reading, and flagged the anomaly in the dashboard — buying time to diagnose the root cause without disrupting the client's monitoring view.
+        </p>
+      </div>
+    </div>
+
+    <!-- Q6: Technical -->
+    <div class="q-block">
+      <div class="q-head" onclick="toggleQ(this)">
+        <span class="q-type-tag tag-technical">Technical</span>
+        <span class="q-title">Explain Pulse Amplitude Modulation and a practical application</span>
+        <span class="q-toggle">▼</span>
+      </div>
+      <div class="q-body">
+        <div class="q-question">"Can you explain Pulse Amplitude Modulation and describe where it's used practically?"</div>
+        <p class="answer-prose">
+          Pulse Amplitude Modulation, or PAM, is a signaling scheme where information is encoded in the amplitude of a series of discrete pulses sampled at regular intervals. In PAM-2, you have two amplitude levels (essentially binary); PAM-4 uses four distinct amplitude levels, allowing two bits of information per pulse — doubling the data throughput without increasing the symbol rate.
+        </p>
+        <p class="answer-prose" style="margin-top:0.7rem;">
+          A practical and very current example is Ethernet. IEEE 802.3 100GBASE-T uses PAM-4 to achieve 100 Gbps over twisted-pair copper by transmitting four amplitude levels per symbol. This is also how modern DDR5 memory interfaces increase bandwidth without a proportional increase in clock frequency. In the embedded world, PAM is relevant when you're designing DAC-based analog output stages — for example, in a multi-level motor drive or a precision sensor excitation circuit, where you want to represent a range of analog voltages using a digital pulse sequence before reconstruction by a low-pass filter.
+        </p>
+        <p class="answer-prose" style="margin-top:0.7rem;">
+          The key trade-off with higher-order PAM is noise margin: more amplitude levels means the gap between adjacent levels shrinks, making the system more susceptible to signal degradation. That's why PAM-4 implementations require careful SNR management and typically pair with forward error correction at the physical layer.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 4: REFLECTION ===================== -->
+<div id="page-reflection" class="page">
+  <div class="reflection-wrap">
+    <div class="section-label">Part 3 — Reflection Paper</div>
+    <h2>From CV Draft to Career Confidence</h2>
+    <div class="word-count">~500 words · Michel Salame · AUST Career Simulation Project</div>
+
+    <div class="reflection-body">
+      <p>
+        When I first sat down to write my CV, I made the same mistake most engineering students make: I described what I did rather than what I achieved. My initial draft listed responsibilities — "maintained lab equipment," "wrote Python scripts" — without quantifying their impact or using the action-verb-driven language that makes a CV memorable to a recruiter scanning it in under ten seconds. That gap between describing activity and demonstrating value turned out to be the most challenging part of this entire project.
+      </p>
+
+      <div class="pull-quote">
+        <p>"The hardest sentence I wrote in this project was not a technical explanation — it was proving that my work mattered in measurable terms."</p>
+      </div>
+
+      <p>
+        Translating my MelRok internship experience into CV language forced me to think rigorously about outcomes. I had developed Python pipelines and built Plotly dashboards — but so what? I had to ask myself: by how much did this reduce manual processing time? What specific problem did the sensor validation work solve, and what would have gone wrong without it? This discipline of backward-reasoning from impact to description is a skill I did not fully possess before this project. Using Claude to review draft bullet points and flag vague phrasing was genuinely useful here — it functioned like a tough-but-fair first reader, pushing me to replace "worked on" with "engineered" and "helped" with "led."
+      </p>
+
+      <p>
+        The mock interview preparation phase surfaced a different kind of challenge: pacing and authenticity. When I first ran a simulation using a ChatGPT-based interview prompt, I discovered that my written answers — which read clearly on paper — sounded rehearsed and robotic when spoken aloud. The AI simulator's feedback identified specific moments where I rushed through the Result component of my STAR responses, undermining the very part that should land strongest. Slowing down, pausing after stating the outcome, and letting the result breathe — these are micro-skills I would not have identified without the simulation.
+      </p>
+
+      <p>
+        Tone was another dimension I underestimated. My first run of the "Tell me about yourself" response was technically accurate but overly modest. The AI feedback pointed out that I was framing my internship as if I were lucky to have contributed, rather than confidently claiming ownership of the problems I solved. That shift from passive to active voice in speech is subtle but significant — it is the difference between a candidate who was present and a candidate who led.
+      </p>
+
+      <p>
+        Looking ahead to the AUST Job Fair, this project has given me something more valuable than polished documents: it has given me a mental model for self-presentation. I now understand that a CV is not a record of where I have been, but an argument for where I should go next. Every line must earn its place by demonstrating relevance to the reader's needs. And every interview answer, however technically sophisticated, must ultimately tell a story — one where I am an engineer who identifies problems, takes deliberate action, and creates measurable change. I leave this project not just more prepared for engineering recruitment, but more aware of my own professional narrative.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 5: AI TOOLS ===================== -->
+<div id="page-ai" class="page">
+  <div class="ai-wrap">
+    <div class="section-label">Part 2 &amp; 3 — AI Integration</div>
+    <h2>AI Tools Used</h2>
+    <p class="ai-intro">The following tools were used throughout the Career Simulation project. Each played a specific, purposeful role — not as a replacement for original thinking, but as an accelerator for quality and self-awareness.</p>
+
+    <div class="tool-grid">
+      <div class="tool-card claude">
+        <div class="tool-logo">🤖</div>
+        <div class="tool-name">Claude (Anthropic)</div>
+        <div class="tool-purpose-label">Primary Writing Partner</div>
+        <p class="tool-desc">Used for CV content development, portfolio page generation, and structured feedback on language clarity and professional tone.</p>
+        <ul class="tool-uses">
+          <li>Reviewed and rewrote vague CV bullet points into action-verb, quantified statements</li>
+          <li>Extracted implied keywords from the Emerson job description and suggested integration points</li>
+          <li>Generated STAR-method interview answers as a scaffolding base for personal revision</li>
+          <li>Provided critical tone feedback on the "Tell me about yourself" response</li>
+        </ul>
+      </div>
+
+      <div class="tool-card grammarly">
+        <div class="tool-logo">✍️</div>
+        <div class="tool-name">Grammarly</div>
+        <div class="tool-purpose-label">Grammar &amp; Clarity Refinement</div>
+        <p class="tool-desc">Used to perform a line-by-line grammar, clarity, and readability check on the final CV and reflection paper.</p>
+        <ul class="tool-uses">
+          <li>Corrected grammar inconsistencies and passive voice overuse in the CV</li>
+          <li>Flagged overly complex sentence structures in the reflection paper</li>
+          <li>Checked readability score and recommended tighter sentence length in technical sections</li>
+        </ul>
+      </div>
+
+      <div class="tool-card chatgpt">
+        <div class="tool-logo">💬</div>
+        <div class="tool-name">ChatGPT (GPT-4)</div>
+        <div class="tool-purpose-label">Job Description Analysis</div>
+        <p class="tool-desc">Used specifically to extract technical and soft skill keywords from Emerson's job posting and map them against existing CV content.</p>
+        <ul class="tool-uses">
+          <li>Identified high-frequency terms: "sensor integration," "protocol communication," "data pipeline"</li>
+          <li>Suggested reordering CV sections to lead with the most role-relevant experience</li>
+          <li>Generated alternative phrasings for technical accomplishments to improve ATS compatibility</li>
+        </ul>
+      </div>
+
+      <div class="tool-card interview">
+        <div class="tool-logo">🎙️</div>
+        <div class="tool-name">AI Interview Simulator (ChatGPT-based prompt)</div>
+        <div class="tool-purpose-label">Mock Interview Practice</div>
+        <p class="tool-desc">A structured prompt-based simulator used to practice answering behavioral and situational interview questions in real time.</p>
+        <ul class="tool-uses">
+          <li>Delivered 6 rounds of mock interview questions aligned to the Emerson role</li>
+          <li>Provided feedback on answer completeness, pacing, and STAR structure adherence</li>
+          <li>Flagged under-confident language ("I think I helped" → "I led") and suggested corrections</li>
+          <li>Identified rushed delivery in Result statements — leading to deliberate pacing practice</li>
+        </ul>
+      </div>
+
+      <div class="tool-card linkedin">
+        <div class="tool-logo">🔗</div>
+        <div class="tool-name">LinkedIn</div>
+        <div class="tool-purpose-label">Company &amp; Role Research</div>
+        <p class="tool-desc">Used to research Emerson Electric's engineering team structure, recent IoT initiatives, and alumni career paths from AUST.</p>
+        <ul class="tool-uses">
+          <li>Identified relevant hiring managers and engineering team structure at Emerson</li>
+          <li>Reviewed 3 AUST alumni profiles at similar companies to benchmark CV positioning</li>
+          <li>Verified that BACnet/Modbus and Python are listed as required skills in active postings</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ai-impact">
+      <h3>Measured Impact of AI Integration</h3>
+      <div class="impact-grid">
+        <div class="impact-stat">
+          <span class="num">5</span>
+          <span class="lbl">AI tools used</span>
+        </div>
+        <div class="impact-stat">
+          <span class="num">6</span>
+          <span class="lbl">Interview rounds simulated</span>
+        </div>
+        <div class="impact-stat">
+          <span class="num">3×</span>
+          <span class="lbl">CV drafts refined</span>
+        </div>
+        <div class="impact-stat">
+          <span class="num">100%</span>
+          <span class="lbl">Original content authored by Michel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+function toggleQ(el) {
+  const body = el.nextElementSibling;
+  const toggle = el.querySelector('.q-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+</script>
+</body>
+</html>
