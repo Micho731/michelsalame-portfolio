@@ -1276,15 +1276,21 @@ footer {
    <div class="video-stage sr">
      <div class="about-label">Recorded Response</div>
      <div class="video-box" style="padding: 0; background: #000; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px;">
-       <iframe 
-         src="https://www.youtube-nocookie.com/embed/O3vaovmWZg4?si=2f4ykhdvCjMEDJgH" 
-         title="YouTube video player" 
-         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
-         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-         referrerpolicy="strict-origin-when-cross-origin" 
-         allowfullscreen>
-       </iframe>
+       
+       <div style="position: absolute; top: -50px; left: 0; width: 100%; height: calc(100% + 100px);">
+         <iframe 
+           src="https://www.youtube-nocookie.com/embed/O3vaovmWZg4?autoplay=1&mute=1&loop=1&playlist=O3vaovmWZg4&controls=0&disablekb=1&modestbranding=1&rel=0" 
+           title="YouTube video player" 
+           style="width: 100%; height: 100%; border: 0;" 
+           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+           allowfullscreen>
+         </iframe>
+       </div>
+   
      </div>
+     <p style="font-size: 0.8rem; color: var(--gold); margin-top: 10px; text-align: center;">
+       Video hosted via YouTube — Click for audio/fullscreen
+     </p>
    </div>
 
   <footer style="margin-top:6rem;">
